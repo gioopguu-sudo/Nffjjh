@@ -10,9 +10,13 @@ local button = Instance.new("TextButton")
 button.Parent = screenGui
 button.Size = UDim2.new(0, 120, 0, 50)
 button.Position = UDim2.new(0.5, -60, 0.8, 0)
-button.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- สีแดง
+button.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 button.Text = "Speed: OFF"
 button.TextScaled = true
+
+-- 🔥 ทำให้ลากได้
+button.Active = true
+button.Draggable = true
 
 local speedOn = false
 
@@ -28,45 +32,5 @@ button.MouseButton1Click:Connect(function()
         humanoid.WalkSpeed = 16
         button.Text = "Speed: OFF"
         button.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-    end
-end)
-
--- ระบบลากปุ่ม
-local UIS = game:GetService("UserInputService")
-
-local dragging = false
-local dragInput
-local dragStart
-local startPos
-
-button.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        dragging = true
-        dragStart = input.Position
-        startPos = button.Position
-        
-        input.Changed:Connect(function()
-            if input.UserInputState == Enum.UserInputState.End then
-                dragging = false
-            end
-        end)
-    end
-end)
-
-button.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-        dragInput = input
-    end
-end)
-
-UIS.InputChanged:Connect(function(input)
-    if input == dragInput and dragging then
-        local delta = input.Position - dragStart
-        button.Position = UDim2.new(
-            startPos.X.Scale,
-            startPos.X.Offset + delta.X,
-            startPos.Y.Scale,
-            startPos.Y.Offset + delta.Y
-        )
     end
 end)
