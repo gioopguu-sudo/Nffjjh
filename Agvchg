@@ -1,0 +1,31 @@
+local player = game.Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local humanoid = char:WaitForChild("Humanoid")
+
+-- สร้าง GUI
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = player:WaitForChild("PlayerGui")
+
+local button = Instance.new("TextButton")
+button.Parent = screenGui
+button.Size = UDim2.new(0, 120, 0, 50)
+button.Position = UDim2.new(0.5, -60, 0.8, 0)
+button.BackgroundColor3 = Color3.fromRGB(0, 255, 0) -- สีเขียว
+button.Text = "Speed: OFF"
+button.TextScaled = true
+
+local speedOn = false
+
+button.MouseButton1Click:Connect(function()
+    speedOn = not speedOn
+    
+    if speedOn then
+        humanoid.WalkSpeed = 100
+        button.Text = "Speed: ON"
+        button.BackgroundColor3 = Color3.fromRGB(0, 200, 0)
+    else
+        humanoid.WalkSpeed = 16
+        button.Text = "Speed: OFF"
+        button.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+    end
+end)
